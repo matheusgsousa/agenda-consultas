@@ -5,12 +5,17 @@ import AddExame from '../components/AddExame';
 import { BsPencilFill} from 'react-icons/bs';
 import { BsTrashFill} from 'react-icons/bs';
 import { FaNotesMedical} from 'react-icons/fa';
+import './Style.css';
 
 export default function Exames() {
     const [state, setState] = useState([])
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     const [show, setShow] = useState(false);
+    const mystyle = {
+        marginRight: "5px",
+        textAlign:"center"
+      };
 
     useEffect(() => {
         firebase.db.collection('exame').onSnapshot((querySnapshot) => {
@@ -29,31 +34,33 @@ export default function Exames() {
             <div className="table-title">
         <div className="row">
             <div className="col-sm-6">
-                <h2>Agendamento <b>Pacientes</b></h2>
+                <h2>Adicionar <b>Exames</b></h2>
             </div>
             <div className="col-sm-6">
-                <Button onClick={handleShow} className="btn btn-success" data-toggle="modal"><FaNotesMedical/><span>Adicionar Exame</span></Button>					
+                <Button onClick={handleShow} variant="outline-primary" data-toggle="modal"><FaNotesMedical style={mystyle}/><span>Adicionar Exame</span></Button>					
             </div>
         </div>
     </div>
-            <table class="table table-striped table-hover">
-                <thead>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nome Paciente</th>
                         <th scope="col">Descrição</th>
                         <th scope="col">Observação</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
                     {state.map((item, i) => (
                         <tr key={i}>
                             <th scope="row">{i + 1}</th>
-                            <td>{item.nomePaciente}</td>
-                            <td>{item.descricao}</td>
-                            <td>{item.observacao}</td>
+                            <td className="mai">{item.nomePaciente}</td>
+                            <td className="mai">{item.descricao}</td>
+                            <td className="mai">{item.observacao}</td>
                             <td> <Button onClick={handleShow}><BsPencilFill /></Button> </td>
-                            <td> <Button><BsTrashFill/></Button> </td>
+                            <td> <Button  variant="danger"><BsTrashFill/></Button> </td>
                         </tr>
                     ))}
                 </tbody>
@@ -68,7 +75,7 @@ export default function Exames() {
                     <AddExame/>
                 </Modal.Body>
                 <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="light" onClick={handleClose}>
                             Fechar
                         </Button>
                 </Modal.Footer>

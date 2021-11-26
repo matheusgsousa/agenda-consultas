@@ -2,6 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import React, { useState } from 'react'
 import firebase from '../database/firebase'
 import { BsCheckLg} from 'react-icons/bs';
+import './AddForms.css'
 
 
 const AddExame = () =>{
@@ -9,6 +10,11 @@ const AddExame = () =>{
   const [descricao, setDescricao] = useState('')
   const [observacao, setObservacao] = useState('')
   const [loader, setLoader] = useState(false);
+  const mystyle = {
+    marginBottom: "10px",
+    borderRadius: "2px",
+    border: "1px shadow #000",
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +28,7 @@ const AddExame = () =>{
       })
       .then(() => {
         setLoader(false);
-        alert("Your message has been submitted👍");
+        alert("Concluído");
       })
       .catch((error) => {
         alert(error.message);
@@ -36,12 +42,16 @@ const AddExame = () =>{
   return(
     <Form onSubmit={handleSubmit}>
     <Form.Group>
+    
         <Form.Control
+          
             type="text"
             placeholder="Nome"
             name="name"
             value={nomePaciente}
             onChange={(e) => setNomePaciente(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
     <Form.Group>
@@ -51,6 +61,8 @@ const AddExame = () =>{
             name="descricao"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
     <Form.Group>
@@ -61,9 +73,11 @@ const AddExame = () =>{
             name="observacao"
             value={observacao}
             onChange={(e) => setObservacao(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
-    <Button variant="success" type="submit" block>
+    <Button type="submit" variant="success" block style={{ background: loader ? "#ccc" : "#0d6efd"}}>
         <BsCheckLg/>
     </Button>
 </Form>

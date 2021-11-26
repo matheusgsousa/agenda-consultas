@@ -2,6 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import React, { useState } from 'react'
 import firebase from '../database/firebase'
 import { BsCheckLg} from 'react-icons/bs';
+import './AddForms.css'
 
 
 const AddMedico = () =>{
@@ -10,6 +11,12 @@ const AddMedico = () =>{
   const [telefone, setTelefone] = useState('')
   const [crm, setCrm] = useState('')
   const [loader, setLoader] = useState(false);
+  const mystyle = {
+    marginBottom: "10px",
+    borderRadius: "2px",
+    border: "1px shadow #000",
+  };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +31,7 @@ const AddMedico = () =>{
       })
       .then(() => {
         setLoader(false);
-        alert("Your message has been submitted👍");
+        alert("Concluído");
       })
       .catch((error) => {
         alert(error.message);
@@ -45,6 +52,8 @@ const AddMedico = () =>{
             name="name"
             value={nomeMedico}
             onChange={(e) => setNomeMedico(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
     <Form.Group>
@@ -54,6 +63,8 @@ const AddMedico = () =>{
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
     <Form.Group>
@@ -63,6 +74,8 @@ const AddMedico = () =>{
             name="telefone"
             value={telefone}
             onChange={(e) => setTelefone(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
     <Form.Group>
@@ -72,9 +85,11 @@ const AddMedico = () =>{
             name="crm"
             value={crm}
             onChange={(e) => setCrm(e.target.value)}
+            required
+            style={mystyle}
         />
     </Form.Group>
-    <Button variant="success" type="submit" block>
+    <Button variant="success" type="submit" block style={{ background: loader ? "#ccc" : "#0d6efd"}}>
         <BsCheckLg/>
     </Button>
 </Form>
