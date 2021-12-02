@@ -29,6 +29,10 @@ export default function Exames() {
         })
     }, [])
 
+    function onDelete(id){
+        firebase.db.collection('exame').doc(id).delete()
+    }
+
     return (
         <>
             <div className="table-title">
@@ -60,7 +64,7 @@ export default function Exames() {
                             <td className="mai">{item.descricao}</td>
                             <td className="mai">{item.observacao}</td>
                             <td> <Button onClick={handleShow}><BsPencilFill /></Button> </td>
-                            <td> <Button  variant="danger"><BsTrashFill/></Button> </td>
+                            <td> <Button onClick={()=>onDelete(item.id)} variant="danger"><BsTrashFill/></Button> </td>
                         </tr>
                     ))}
                 </tbody>

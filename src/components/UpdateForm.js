@@ -4,11 +4,8 @@ import firebase from '../database/firebase'
 import { BsCheckLg} from 'react-icons/bs';
 import './AddForms.css'
 
-const AddForm = () =>{
-  const [nomePaciente, setNomePaciente] = useState('')
-  const [data, setData] = useState('')
-  const [horario, setHorario] = useState('')
-  const [loader, setLoader] = useState(false);
+const UpdateForm = () =>{
+  const [updateAgenda, setupdateAgenda] = useState('')
   const mystyle = {
     marginBottom: "10px",
     borderRadius: "2px",
@@ -16,33 +13,14 @@ const AddForm = () =>{
   };
   
  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoader(true);
+  const onUpdate= (id) =>{
+    firebase.db.collection('agendamento').doc(id).set({nomePaciente:updateAgenda, data:updateAgenda, horario:updateAgenda})
+  }
 
-    firebase.db.collection("agendamento")
-      .add({
-        nomePaciente: nomePaciente,
-        data: data,
-        horario: horario,
-      })
-      .then(() => {
-        setLoader(false);
-        alert("Concluído");
-      })
-      .catch((error) => {
-        alert(error.message);
-        setLoader(false);
-      });
-
-    setNomePaciente("");
-    setData("");
-    setHorario("");
-  };
   
 
   return(
-    <Form onSubmit={handleSubmit}>
+    <Form >
     <Form.Group>
     
         <Form.Control
@@ -51,7 +29,7 @@ const AddForm = () =>{
             placeholder="Nome"
             name="name"
             value={nomePaciente}
-            onChange={(e) => setNomePaciente(e.target.value)}
+            onChange={e=>setupdateAgenda(e.target.value)}
             required
             style={mystyle}
         />
@@ -61,7 +39,7 @@ const AddForm = () =>{
             type="date"
             name="data"
             value={data}
-            onChange={(e) => setData(e.target.value)}
+            onChange={e=>setupdateAgenda(e.target.value)}
             required
             style={mystyle}
         />
@@ -72,12 +50,12 @@ const AddForm = () =>{
             placeholder="Horário"
             name="horario"
             value={horario}
-            onChange={(e) => setHorario(e.target.value)}
+            onChange={e=>setupdateAgenda(e.target.value)}
             required
             style={mystyle}
         />
     </Form.Group>
-    <Button variant="success" type="submit" block style={{ background: loader ? "#ccc" : "#0d6efd"}}>
+    <Button onClick={()=>onUpdate(item.id)} variant="success" type="submit" block style={{ background: loader ? "#ccc" : "#0d6efd"}}>
         <BsCheckLg/>
     </Button>
     
@@ -86,4 +64,4 @@ const AddForm = () =>{
   )
   
 }
-export default AddForm;
+export default UpdateForm;

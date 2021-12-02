@@ -21,6 +21,7 @@ export default function Agendamentos() {
       };
     
     
+    
  
 
 
@@ -37,6 +38,12 @@ export default function Agendamentos() {
             setState(firebase)
         })
     }, [])
+    
+
+    function onDelete(id){
+        firebase.db.collection('agendamento').doc(id).delete()
+    }
+
     
     
    
@@ -76,7 +83,8 @@ export default function Agendamentos() {
                             <td> {item.horario} </td>
                             <td> <Button><BsPencilFill /></Button> </td>
                             
-                            <td> <Button variant="danger"><BsTrashFill/></Button> </td>
+                            <td> <Button onClick={()=>onDelete(item.id)} variant="danger"><BsTrashFill/></Button> </td>
+
 
                             
                         </tr>

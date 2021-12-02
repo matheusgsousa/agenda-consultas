@@ -27,8 +27,10 @@ export default function Medicos() {
             setState(firebase)
         })
     }, [])
+    function onDelete(id){
+        firebase.db.collection('medico').doc(id).delete()
+    }
 
-    console.log(state)
 
 
     return (
@@ -69,7 +71,7 @@ export default function Medicos() {
                             <td>{item.telefone}</td>
                             <td>{item.crm}</td>
                             <td> <Button onClick={handleShow}><BsPencilFill /></Button> </td>
-                            <td> <Button  variant="danger"><BsTrashFill/></Button> </td>
+                            <td> <Button onClick={()=>onDelete(item.id)} variant="danger"><BsTrashFill/></Button> </td>
                         </tr>
                     ))}
                 </tbody>
